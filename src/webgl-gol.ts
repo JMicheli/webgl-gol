@@ -15,10 +15,10 @@ const SPACE_KEY = " ";
 @customElement("webgl-gol")
 export class WebGLGol extends LitElement {
   // LitElement properties
-  @property({type: Number})
+  @property({ type: Number })
   cellWidth = 5;
 
-  @property({type: Number})
+  @property({ type: Number })
   updateTimestep = 100;
 
   @query("#webgl-gol-canvas", true)
@@ -49,9 +49,7 @@ export class WebGLGol extends LitElement {
   `;
 
   render() {
-    return html`
-      <canvas id="webgl-gol-canvas"></canvas>
-    `;
+    return html` <canvas id="webgl-gol-canvas"></canvas> `;
   }
 
   constructor() {
@@ -59,37 +57,46 @@ export class WebGLGol extends LitElement {
 
     // Define MouseDown callback
     this.handleMouseDown = (event: MouseEvent) => {
-      if (!this.application || !this.canvas) { return; }
-      
+      if (!this.application || !this.canvas) {
+        return;
+      }
+
       if (event.button == LEFT_MOUSE) {
         this.isMouseDown = true;
         const should_kill = event.ctrlKey;
-  
-        const canvas_pos = getCanvasPos(this.canvas, { x: event.x, y: event.y });
+
+        const canvas_pos = getCanvasPos(this.canvas, {
+          x: event.x,
+          y: event.y
+        });
         this.application.mouseInput(canvas_pos, should_kill);
       }
     };
 
     // Define MouseMove callback
     this.handleMouseMove = (event: MouseEvent) => {
-      if (!this.isMouseDown || !this.application || !this.canvas) { return; }
-  
+      if (!this.isMouseDown || !this.application || !this.canvas) {
+        return;
+      }
+
       const should_kill = event.ctrlKey;
       const canvas_pos = getCanvasPos(this.canvas, { x: event.x, y: event.y });
       this.application.mouseInput(canvas_pos, should_kill);
     };
-  
+
     // Define MouseUp callback
     this.handleMouseUp = (event: MouseEvent) => {
       if (event.button == LEFT_MOUSE && this.isMouseDown) {
         this.isMouseDown = false;
       }
     };
-    
+
     // Define KeyUp callback
     this.handleKeyUp = (event: KeyboardEvent) => {
-      if (!this.application || !this.canvas) { return; }
-  
+      if (!this.application || !this.canvas) {
+        return;
+      }
+
       switch (event.key) {
         case R_KEY:
           this.application.randomize(0.5);
@@ -98,7 +105,9 @@ export class WebGLGol extends LitElement {
           this.application.clear();
           break;
         case S_KEY:
-          if (this.isPaused) { this.application.update(); }
+          if (this.isPaused) {
+            this.application.update();
+          }
           break;
         case SPACE_KEY:
           this.isPaused = !this.isPaused;
@@ -110,21 +119,23 @@ export class WebGLGol extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    
+
     html`foo ${"bar"}`;
 
     // Wait until JS Event Loop is empty to attach listeners
     setTimeout(() => {
       // Create application
-      if (this.canvas == null) { throw new Error("Canvas not available"); }
+      if (this.canvas == null) {
+        throw new Error("Canvas not available");
+      }
       this.application = new GoLApp(this.canvas, this.cellWidth);
-      
+
       // Add event listeners
       window.addEventListener("keyup", this.handleKeyUp);
       window.addEventListener("mouseup", this.handleMouseUp);
       this.addEventListener("mousemove", this.handleMouseMove);
       this.addEventListener("mousedown", this.handleMouseDown);
-      
+
       // Begin update loop
       this.updateStep();
     });
@@ -148,12 +159,14 @@ export class WebGLGol extends LitElement {
       this.application.update();
     }
 
-    setTimeout(() => { this.updateStep(); }, this.updateTimestep);
+    setTimeout(() => {
+      this.updateStep();
+    }, this.updateTimestep);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "webgl-gol": WebGLGol
+    "webgl-gol": WebGLGol;
   }
 }

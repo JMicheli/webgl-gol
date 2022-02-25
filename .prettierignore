@@ -1,0 +1,8 @@
+# Build artifacts
+dist
+types
+
+# Dependencies
+node_modules
+pnpm-lock.yaml
+package.json

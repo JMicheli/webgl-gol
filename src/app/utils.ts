@@ -7,7 +7,7 @@ export interface Pos {
 }
 
 /**
- * A function normalizing a screen space position to the input 
+ * A function normalizing a screen space position to the input
  * HTMLCanvasElement's local space.
  * @param canvas HTML canvas element to normalize `pos` relative to.
  * @param pos Position in screen space to normalize.

@@ -8,7 +8,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:wc/recommended",
-    "plugin:lit/recommended"
+    "plugin:lit/recommended",
+    "prettier"
   ],
 
   "parser": "@typescript-eslint/parser",
@@ -17,15 +18,5 @@
     "sourceType": "module"
   },
 
-  "plugins": [
-    "@typescript-eslint",
-    "wc",
-    "lit"
-  ],
-  
-  "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"]
-  }
+  "plugins": ["@typescript-eslint", "wc", "lit"]
 }

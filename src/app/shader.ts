@@ -14,11 +14,15 @@ export default class Shader {
    */
   constructor(glContext: WebGL2RenderingContext, vSource: string, fSource: string) {
     // Store context, place in const for readability
-    const gl = this.gl = glContext;
+    const gl = (this.gl = glContext);
 
     // Create a program and store it
     const prog = glContext.createProgram();
-    if (!prog) { throw new Error("Failed to create program"); } else { this.program = prog; }
+    if (!prog) {
+      throw new Error("Failed to create program");
+    } else {
+      this.program = prog;
+    }
 
     const vShader = this.createGLShader(vSource, gl.VERTEX_SHADER);
     const fShader = this.createGLShader(fSource, gl.FRAGMENT_SHADER);
@@ -30,7 +34,9 @@ export default class Shader {
 
     // Handle errors
     const error = gl.getProgramInfoLog(prog);
-    if (error) { throw new Error("Problem with program creation: " + error); }
+    if (error) {
+      throw new Error("Problem with program creation: " + error);
+    }
   }
 
   /**
@@ -42,14 +48,18 @@ export default class Shader {
   private createGLShader(source: string, type: number): WebGLShader {
     const gl = this.gl; // Convenience variable
     const shader = gl.createShader(type);
-    if (!shader) { throw console.error("Failed to create shader of type " + type); }
+    if (!shader) {
+      throw console.error("Failed to create shader of type " + type);
+    }
 
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
 
     // Handle errors
     const error = gl.getShaderInfoLog(shader);
-    if (error) { throw new Error("Shader compiler error: " + error); }
+    if (error) {
+      throw new Error("Shader compiler error: " + error);
+    }
 
     return shader;
   }

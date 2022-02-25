@@ -31,24 +31,29 @@ export class GoLApp {
    * @constructor
    * @param {HTMLCanvasElement} canvas A canvas to draw the game on.
    * @param {number} cellWidth The width of a grid cell in pixels.
-  */
+   */
   constructor(canvas: HTMLCanvasElement, cellWidth: number) {
     this.canvas = canvas;
     this.cellWidth = cellWidth;
     this.regenerateBoundaries();
 
     // Grab GL context and shader source
-    const gl = this.gl = this.getWebGLContext(canvas);
+    const gl = (this.gl = this.getWebGLContext(canvas));
 
     // Initialize framebuffers
     // Create the framebuffer and set the index
     const fb = gl.createFramebuffer();
-    if (fb == null) { throw new ReferenceError("Framebuffer creation failed"); }
+    if (fb == null) {
+      throw new ReferenceError("Framebuffer creation failed");
+    }
     this.framebuffer = fb;
     this.curFBIndex = 0; // Currently using FBTextures[0]
     // Generate two framebuffer textures for swapping
-    const t1 = gl.createTexture(); const t2 = gl.createTexture();
-    if (t1 == null || t2 == null) { throw new ReferenceError("Texture creation failed"); }
+    const t1 = gl.createTexture();
+    const t2 = gl.createTexture();
+    if (t1 == null || t2 == null) {
+      throw new ReferenceError("Texture creation failed");
+    }
     this.FBTextures = [t1, t2];
     // Set parameters for both buffer textures
     for (let i = 0; i < 2; i++) {
@@ -63,7 +68,9 @@ export class GoLApp {
     // Generate vertex array/load geometry
     // Create vertex array and bind it
     const va = gl.createVertexArray();
-    if (va == null) { throw new ReferenceError("Vertex Array Object creation failed"); }
+    if (va == null) {
+      throw new ReferenceError("Vertex Array Object creation failed");
+    }
     this.vao = va;
     gl.bindVertexArray(this.vao);
     // Create quad vertices
@@ -75,12 +82,8 @@ export class GoLApp {
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
     // Create shaders
-    this.updateShader = new Shader(gl,
-      UpdateSource.Vertex,
-      UpdateSource.Fragment);
-    this.drawShader = new Shader(gl,
-      DrawSource.Vertex,
-      DrawSource.Fragment);
+    this.updateShader = new Shader(gl, UpdateSource.Vertex, UpdateSource.Fragment);
+    this.drawShader = new Shader(gl, DrawSource.Vertex, DrawSource.Fragment);
 
     // Draw initial state
     this.draw();
@@ -119,9 +122,17 @@ export class GoLApp {
 
     // Bind current framebuffer texture and overwrite texture
     gl.bindTexture(gl.TEXTURE_2D, this.FBTextures[this.curFBIndex]);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,
-      this.widthInCells, this.heightInCells,
-      0, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      this.widthInCells,
+      this.heightInCells,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      data
+    );
 
     // Trigger re-draw
     this.draw();
@@ -130,7 +141,7 @@ export class GoLApp {
   /**
    * Change the cell width of the simulation.
    * @param {number} width The new cell width
-  */
+   */
   public changeCellWidth(width: number): void {
     this.cellWidth = width;
     this.regenerateBoundaries();
@@ -157,7 +168,17 @@ export class GoLApp {
     const pixelData = new Uint8Array([value, value, value, 255]);
     // Bind current framebuffer texture and replace relevant pixel
     gl.bindTexture(gl.TEXTURE_2D, this.FBTextures[this.curFBIndex]);
-    gl.texSubImage2D(gl.TEXTURE_2D, 0, offset.x, offset.y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixelData);
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      offset.x,
+      offset.y,
+      1,
+      1,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      pixelData
+    );
 
     // Trigger re-draw
     this.draw();
@@ -247,9 +268,17 @@ export class GoLApp {
       // Generate random data and store it to GPU memory
       const textureArray = this.randomizedTextureArray(pixelCount, fractionAlive);
       gl.bindTexture(gl.TEXTURE_2D, this.FBTextures[i]);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,
-        this.widthInCells, this.heightInCells,
-        0, gl.RGBA, gl.UNSIGNED_BYTE, textureArray);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        this.widthInCells,
+        this.heightInCells,
+        0,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        textureArray
+      );
     }
   }
 
@@ -264,9 +293,9 @@ export class GoLApp {
     for (let i = 0; i < texArray.length; i += 4) {
       const value = Math.random() < fractionAlive ? 255 : 0;
       texArray[i] = value;
-      texArray[i+1] = value;
-      texArray[i+2] = value;
-      texArray[i+3] = 255;
+      texArray[i + 1] = value;
+      texArray[i + 2] = value;
+      texArray[i + 3] = 255;
     }
 
     return texArray;
@@ -280,7 +309,9 @@ export class GoLApp {
   private getWebGLContext(canvas: HTMLCanvasElement): WebGL2RenderingContext {
     const gl = canvas.getContext("webgl2", { antialias: false });
     const isWebGL2 = !!gl;
-    if (!isWebGL2 || !gl) { throw console.error("No WebGL2 context"); }
+    if (!isWebGL2 || !gl) {
+      throw console.error("No WebGL2 context");
+    }
 
     return gl;
   }
