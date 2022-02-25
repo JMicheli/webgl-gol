@@ -1,0 +1,27 @@
+{
+  "name": "webgl-gol",
+  "private": true,
+  "version": "0.1.0",
+  "main": "dist/webgl-gol.es.js",
+  "exports": {
+    ".": "./dist/webgl-gol.es.js"
+  },
+  "types": "types/webgl-gol.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite dev",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "lit": "^2.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0"
+  },
+  "author": "Joseph W. Micheli",
+  "license": "3-Clause BSD"
+}
