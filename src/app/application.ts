@@ -1,11 +1,11 @@
-import Shader from "./shader";
+import { Shader, createShader } from "./shader";
 import { Pos } from "./utils";
 import { UpdateSource, DrawSource } from "./shader-sources";
 
 /**
  * An application for simulation Conway's Game of life on GPU with WebGL.
  */
-export class GoLApp {
+export class AutomataApp {
   // Private properties
   private canvas: HTMLCanvasElement;
   private gl: WebGL2RenderingContext;
@@ -82,8 +82,8 @@ export class GoLApp {
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
     // Create shaders
-    this.updateShader = new Shader(gl, UpdateSource.Vertex, UpdateSource.Fragment);
-    this.drawShader = new Shader(gl, DrawSource.Vertex, DrawSource.Fragment);
+    this.updateShader = createShader(gl, UpdateSource);
+    this.drawShader = createShader(gl, DrawSource);
 
     // Draw initial state
     this.draw();
@@ -98,8 +98,9 @@ export class GoLApp {
     gl.bindTexture(gl.TEXTURE_2D, null);
     gl.deleteTexture(this.FBTextures[0]);
     gl.deleteTexture(this.FBTextures[1]);
-    // Unbind framebuffer, delete VAO
+    // Unbind framebuffer and delete, delete VAO
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.deleteFramebuffer(this.framebuffer);
     gl.deleteVertexArray(this.vao);
     // Delete shaders
     this.updateShader.delete();
@@ -158,12 +159,14 @@ export class GoLApp {
    * @param {boolean} killCell Should inputs kill cells?
    */
   public mouseInput(input_pos: Pos, killCell = false): void {
-    const gl = this.gl;
-    // Generate update pixel
-    const offset: Pos = {
+    // Calculate update pixel location
+    const pixelLocation: Pos = {
       x: Math.floor(input_pos.x / this.cellWidth),
       y: this.heightInCells - (Math.floor(input_pos.y / this.cellWidth) + 1)
     };
+
+    // Update pixel in texture
+    const gl = this.gl;
     const value = killCell ? 0 : 255;
     const pixelData = new Uint8Array([value, value, value, 255]);
     // Bind current framebuffer texture and replace relevant pixel
@@ -171,8 +174,8 @@ export class GoLApp {
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,
-      offset.x,
-      offset.y,
+      pixelLocation.x,
+      pixelLocation.y,
       1,
       1,
       gl.RGBA,

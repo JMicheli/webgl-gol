@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { GoLApp, getCanvasPos } from "./app";
+import { AutomataApp, getCanvasPos } from "./app";
 
 // Handy constants
 const LEFT_MOUSE = 0;
@@ -15,17 +15,30 @@ const SPACE_KEY = " ";
 @customElement("webgl-gol")
 export class WebGLGol extends LitElement {
   // LitElement properties
-  @property({ type: Number })
+  /**
+   * The width of a cell on the canvas in pixels.
+   */
+  @property({ type: Number, attribute: true })
   cellWidth = 5;
 
-  @property({ type: Number })
+  /**
+   * The ratio of live/total cells after randomization.
+   * Should be between 0 and 1.
+   */
+  @property({ type: Number, attribute: true })
+  randomizeRatio = 0.5;
+
+  /**
+   * The time between simulation ticks in milliseconds.
+   */
+  @property({ type: Number, attribute: true })
   updateTimestep = 100;
 
   @query("#webgl-gol-canvas", true)
   canvas: HTMLCanvasElement;
 
   // Private properties
-  private application: GoLApp | null = null;
+  private application: AutomataApp | null = null;
   private isMouseDown = false;
   private isPaused = false;
 
@@ -99,7 +112,7 @@ export class WebGLGol extends LitElement {
 
       switch (event.key) {
         case R_KEY:
-          this.application.randomize(0.5);
+          this.application.randomize(this.randomizeRatio);
           break;
         case C_KEY:
           this.application.clear();
@@ -128,7 +141,7 @@ export class WebGLGol extends LitElement {
       if (this.canvas == null) {
         throw new Error("Canvas not available");
       }
-      this.application = new GoLApp(this.canvas, this.cellWidth);
+      this.application = new AutomataApp(this.canvas, this.cellWidth);
 
       // Add event listeners
       window.addEventListener("keyup", this.handleKeyUp);
