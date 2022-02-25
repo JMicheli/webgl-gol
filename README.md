@@ -12,7 +12,7 @@ Note that this project uses [pnpm](https://pnpm.io/) as its package manager. The
 
 Clone the repository:
 
-`git clone https://gitlab.com/JMicheli/webgl-game-of-life.git`
+`git clone https://github.com/JMicheli/webgl-gol`
 
 Install dependencies:
 
@@ -34,8 +34,10 @@ Start development server:
 
 <kbd>space</kbd> - Pause/resume simulation
 
+<kbd>s</kbd> - Step simulation (while paused)
+
 <kbd>c</kbd> - Clear cells
 
 <kbd>r</kbd> - Randomize cells
 
-© Joseph W. Micheli 2021, all rights reserved. See `License.txt` for further information.
+© Joseph W. Micheli 2021, all rights reserved. See `license.txt` for further information.
