@@ -12,14 +12,14 @@ const SPACE_KEY = " ";
 /**
  * The main WebGL Game of Life element.
  */
-@customElement('webgl-gol')
+@customElement("webgl-gol")
 export class WebGLGol extends LitElement {
   // LitElement properties
   @property({type: Number})
-  cellWidth: number = 5;
+  cellWidth = 5;
 
   @property({type: Number})
-  updateTimestep: number = 100;
+  updateTimestep = 100;
 
   @query("#webgl-gol-canvas", true)
   canvas: HTMLCanvasElement;
@@ -35,30 +35,23 @@ export class WebGLGol extends LitElement {
   private handleMouseUp: (event: MouseEvent) => void;
   private handleKeyUp: (event: KeyboardEvent) => void;
 
-  /**
-   * The CSS styles applied to the webgl-go
-   * LitElement.
-   */
   static styles = css`
     :host {
       display: block;
-      border: none;
-      padding: 0px;
-      margin: 0px;
-
-      width: 400px;
-      height: 300px;
+      width: 800px;
+      height: 600px;
     }
 
     #webgl-gol-canvas {
-      background: red;
       width: 100%;
       height: 100%;
     }
-  `
+  `;
 
   render() {
-    return html`<canvas id="webgl-gol-canvas"></canvas>`
+    return html`
+      <canvas id="webgl-gol-canvas"></canvas>
+    `;
   }
 
   constructor() {
@@ -75,7 +68,7 @@ export class WebGLGol extends LitElement {
         const canvas_pos = getCanvasPos(this.canvas, { x: event.x, y: event.y });
         this.application.mouseInput(canvas_pos, should_kill);
       }
-    }
+    };
 
     // Define MouseMove callback
     this.handleMouseMove = (event: MouseEvent) => {
@@ -84,14 +77,14 @@ export class WebGLGol extends LitElement {
       const should_kill = event.ctrlKey;
       const canvas_pos = getCanvasPos(this.canvas, { x: event.x, y: event.y });
       this.application.mouseInput(canvas_pos, should_kill);
-    }
+    };
   
     // Define MouseUp callback
     this.handleMouseUp = (event: MouseEvent) => {
       if (event.button == LEFT_MOUSE && this.isMouseDown) {
         this.isMouseDown = false;
       }
-    }
+    };
     
     // Define KeyUp callback
     this.handleKeyUp = (event: KeyboardEvent) => {
@@ -112,12 +105,14 @@ export class WebGLGol extends LitElement {
           event.preventDefault(); //Stop scrolling
           break;
       }
-    }
+    };
   }
 
   connectedCallback(): void {
     super.connectedCallback();
     
+    html`foo ${"bar"}`;
+
     // Wait until JS Event Loop is empty to attach listeners
     setTimeout(() => {
       // Create application
@@ -153,12 +148,12 @@ export class WebGLGol extends LitElement {
       this.application.update();
     }
 
-    setTimeout(() => { this.updateStep(); }, this.updateTimestep)
+    setTimeout(() => { this.updateStep(); }, this.updateTimestep);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'webgl-gol': WebGLGol
+    "webgl-gol": WebGLGol
   }
 }

@@ -12,13 +12,13 @@ export class GoLApp {
   private cellWidth: number;
 
   // Drawing surface variables
-  private width: number = 0;
-  private height: number = 0;
-  private widthInCells: number = 0;
-  private heightInCells: number = 0;
+  private width = 0;
+  private height = 0;
+  private widthInCells = 0;
+  private heightInCells = 0;
 
   // OpenGL vars
-  private curFBIndex: number = 0;
+  private curFBIndex = 0;
   private FBTextures: WebGLTexture[];
   private framebuffer: WebGLFramebuffer;
   private vao: WebGLVertexArrayObject;
@@ -259,7 +259,7 @@ export class GoLApp {
    * @param {number} fractionAlive Ratio of alive/dead cells
    * @return {Uint8Array} An array of rgba values
    */
-  private randomizedTextureArray(pixels: number, fractionAlive: number = 0.5): Uint8Array {
+  private randomizedTextureArray(pixels: number, fractionAlive = 0.5): Uint8Array {
     const texArray = new Uint8Array(4 * pixels);
     for (let i = 0; i < texArray.length; i += 4) {
       const value = Math.random() < fractionAlive ? 255 : 0;

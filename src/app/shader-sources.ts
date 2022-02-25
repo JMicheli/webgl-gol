@@ -8,7 +8,7 @@ export interface ShaderSource {
 }
 
 // Vertex shader for update call
-const UpdateVertexSource: string = `#version 300 es
+const UpdateVertexSource = `#version 300 es
 layout(location = 0) in vec2 a_pos;
 
 void main() {
@@ -16,7 +16,7 @@ void main() {
 }`;
 
 // Fragment shader for updating grid
-const UpdateFragmentSource: string = `#version 300 es
+const UpdateFragmentSource = `#version 300 es
 precision highp float;
 uniform sampler2D u_state;
 uniform vec2 u_scale;
@@ -68,7 +68,7 @@ void main() {
 }`;
 
 // Vertex shader for draw call
-const DrawVertexSource: string = `#version 300 es
+const DrawVertexSource = `#version 300 es
 precision highp float;
 layout(location = 0) in vec2 a_pos;
 out vec2 v_texcoord;
