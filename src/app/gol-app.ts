@@ -37,7 +37,7 @@ export class GoLApp {
     this.cellWidth = cellWidth;
     this.regenerateBoundaries();
 
-    // Grab GL context and shader source
+    // Grab GL context
     const gl = (this.gl = this.getWebGLContext(canvas));
 
     // Initialize framebuffers

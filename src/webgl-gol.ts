@@ -120,8 +120,6 @@ export class WebGLGol extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
 
-    html`foo ${"bar"}`;
-
     // Wait until JS Event Loop is empty to attach listeners
     setTimeout(() => {
       // Create application
