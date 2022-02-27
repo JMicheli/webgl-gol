@@ -1,11 +1,4 @@
-/**
- * A set of Vertex and Fragment shader sources
- * as strings containing GLSL.
- */
-export interface ShaderSource {
-  Vertex: string;
-  Fragment: string;
-}
+import { ShaderSource } from "./shader";
 
 // Vertex shader for update call
 const UpdateVertexSource = `#version 300 es

@@ -1,7 +1,16 @@
 /**
+ * A set of Vertex and Fragment shader sources
+ * as strings containing GLSL.
+ */
+export interface ShaderSource {
+  Vertex: string;
+  Fragment: string;
+}
+
+/**
  * A class abstracting WebGL shader functionality.
  */
-export default class Shader {
+export class Shader {
   public program: WebGLProgram;
   public gl: WebGL2RenderingContext;
 
@@ -105,4 +114,8 @@ export default class Shader {
     this.disable();
     this.gl.deleteProgram(this.program);
   }
+}
+
+export function createShader(gl: WebGL2RenderingContext, shader_source: ShaderSource): Shader {
+  return new Shader(gl, shader_source.Vertex, shader_source.Fragment);
 }
