@@ -27,8 +27,8 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-gems-
     - uses: helaili/jekyll-action@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+            token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
