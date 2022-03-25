@@ -9,5 +9,5 @@
   ],
 
   "words": ["pnpm", "timestep", "vite", "prettierrc", "prettierignore"],
-  "ignoreWords": []
+  "ignoreWords": ["helaili"]
 }
