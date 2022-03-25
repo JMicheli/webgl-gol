@@ -1,0 +1,9 @@
+{
+  "cSpell.enabled": true,
+  "cSpell.import": ["${workspaceFolder}/.vscode/config/cspell.json"],
+
+  "markdownlint.run": "onType",
+  "markdownlint.config": {
+    "no-inline-html": false
+  }
+}
