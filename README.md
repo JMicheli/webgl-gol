@@ -4,7 +4,7 @@ A component for displaying and playing [Conway's Game of Life](https://en.wikipe
 
 Implemented in TypeScript using [Lit](https://lit.dev) for compilation to native, reusable WebComponents.
 
-## Dev
+## Development
 
 Ensure that you have Git and Node.js (version >= 11.0) installed.
 
@@ -21,6 +21,10 @@ Install dependencies:
 Start development server:
 
 `pnpm run dev`
+
+### Tooling
+
+This project uses VSCode tooling with extension-based automation. Configuration for this is located in the `.vscode/` directory. Configuration for ESLint, Prettier, and cSpell are located in the `.vscode/config/` subdirectory.
 
 ## Controls
 

@@ -14,10 +14,10 @@
   "scripts": {
     "dev": "vite dev",
     "build": "tsc && vite build",
-    "lint": "eslint src/**/*.{js,ts}",
-    "lint:fix": "eslint --fix src/**/*.{js,ts}",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "lint": "eslint --config ./.vscode/config/.eslintrc src/**/*.{js,ts}",
+    "lint:fix": "eslint --fix --config ./.vscode/config/.eslintrc src/**/*.{js,ts}",
+    "format": "prettier --config ./.vscode/config/.prettierrc --ignore-path ./.vscode/config/.prettierignore --check .",
+    "format:fix": "prettier --config ./.vscode/config/.prettierrc --ignore-path ./.vscode/config/.prettierignore --write ."
   },
   "dependencies": {
     "lit": "^2.0.2"
