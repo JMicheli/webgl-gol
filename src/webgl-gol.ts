@@ -51,8 +51,8 @@ export class WebGLGol extends LitElement {
   static styles = css`
     :host {
       display: block;
-      width: 800px;
-      height: 600px;
+      width: 100%;
+      height: 100vh;
     }
 
     #webgl-gol-canvas {

@@ -13,7 +13,9 @@
   ],
   "scripts": {
     "dev": "vite dev",
+    "dev:jekyll": "tsc && vite build --mode github && jekyll serve",
     "build": "tsc && vite build",
+    "build:jekyll": "tsc && vite build --mode github && jekyll build",
     "lint": "eslint --config ./.vscode/config/.eslintrc src/**/*.{js,ts}",
     "lint:fix": "eslint --fix --config ./.vscode/config/.eslintrc src/**/*.{js,ts}",
     "format": "prettier --config ./.vscode/config/.prettierrc --ignore-path ./.vscode/config/.prettierignore --check .",

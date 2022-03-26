@@ -5,7 +5,9 @@
     ".git",
     "dist",
     "types",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "Gemfile",
+    "*.lock"
   ],
 
   "words": ["pnpm", "timestep", "vite", "prettierrc", "prettierignore"],
