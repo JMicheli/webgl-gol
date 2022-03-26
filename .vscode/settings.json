@@ -5,5 +5,10 @@
   "markdownlint.run": "onType",
   "markdownlint.config": {
     "no-inline-html": false
+  },
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.jekyll-cache": true
   }
 }
