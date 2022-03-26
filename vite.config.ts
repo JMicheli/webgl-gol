@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) =>{
-  if (command == "build" && mode =="github") {
+  if (command == "build" && mode =="jekyll") {
     return {
       build: {
         lib: {
