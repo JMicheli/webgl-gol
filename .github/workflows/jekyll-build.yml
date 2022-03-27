@@ -1,4 +1,4 @@
-name: Jekyll site CI
+name: WebGL Auto-deployment
 
 # Controls when the workflow will run
 on:
@@ -29,8 +29,8 @@ jobs:
 
       - name: Project build
         run: |
-          yarn install
-          yarn run build:jekyll
+          npm install
+          npm run build:jekyll
 
       - name: Build the site in the jekyll/builder container
         run: |
