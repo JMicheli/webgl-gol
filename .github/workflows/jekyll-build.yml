@@ -12,9 +12,8 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-# This workflow contains a single job called "jekyll-build"
 jobs:
-  jekyll-build:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -37,3 +36,20 @@ jobs:
             yarn run build:jekyll && \
             jekyll build\
         "
+    - uses: actions/upload-artifact@v3
+      with:
+            name: webgl-gol-build-artifact
+            path: /srv/jekyll/_site
+            if-no-files-found: error
+  
+  # This will be the deploy stage of the workflow, we'll need to figure out how this works
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    # Ensure that deploy runs after build
+    needs: build
+
+    steps:
+    - run: echo hello
+
