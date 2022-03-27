@@ -8,6 +8,7 @@ exclude: [
   "types",
   "package.json",
   "pnpm-lock.yaml",
+  "yarn.lock",
   "README.md",
   "tsconfig.json",
   "tsconfig.node.json",

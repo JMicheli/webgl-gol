@@ -25,6 +25,7 @@ jobs:
             key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
             restore-keys: |
               ${{ runner.os }}-gems-
+
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
@@ -36,7 +37,9 @@ jobs:
             yarn run build:jekyll && \
             jekyll build\
         "
-    - uses: actions/upload-artifact@v3
+    
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
       with:
             name: webgl-gol-build-artifact
             path: ${{ github.workspace }}/_site
@@ -51,5 +54,12 @@ jobs:
     needs: build
 
     steps:
-    - run: echo hello
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+            name: webgl-gol-build-artifact
+            path: ${{ github.workspace }}/_site
 
+    - name: Testing the artifact
+      run: |
+        cat ${{ github.workspace }}/_site/index.html
