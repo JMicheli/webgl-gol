@@ -10,7 +10,16 @@
     "Gemfile",
     "*.lock"
   ],
-
-  "words": ["pnpm", "timestep", "vite", "prettierrc", "prettierignore"],
-  "ignoreWords": ["helaili", "peaceiris"]
+  "words": [
+    "mkdir",
+    "pnpm",
+    "prettierignore",
+    "prettierrc",
+    "timestep",
+    "vite"
+  ],
+  "ignoreWords": [
+    "helaili",
+    "peaceiris"
+  ]
 }

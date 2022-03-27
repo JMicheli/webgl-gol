@@ -49,6 +49,7 @@ jobs:
           path: ${{ github.workspace }}/_site
           if-no-files-found: error
 
+  # Push the build results to the gh-pages branch where it will be automatically processed.
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -59,10 +60,20 @@ jobs:
         with:
           name: webgl-gol-build-artifact
           path: ${{ github.workspace }}/_site
-          if-no-files-found: error
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Push results to gh-pages branch
+        uses: actions/checkout@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ github.workspace }}/_site
+          ref: gh-pages
+          path: ${{ github.workspace }}/repo
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+
+          cd /repo
+          git rm -rf
+          git clean -fxd
+          mv ../_site/* .
+          git add *
+          git commit -m "Automatic commit"
+          git push origin gh-pages
