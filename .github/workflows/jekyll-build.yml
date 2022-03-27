@@ -61,11 +61,13 @@ jobs:
           name: webgl-gol-build-artifact
           path: ${{ github.workspace }}/_site
 
-      - name: Push results to gh-pages branch
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: gh-pages
           path: ${{ github.workspace }}/repo
+
+      - name: Push build artifact to gh-pages
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
