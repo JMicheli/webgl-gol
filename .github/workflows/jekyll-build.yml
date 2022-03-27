@@ -29,12 +29,11 @@ jobs:
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "\
-          chmod -R 777 /srv/jekyll && \
-          npm config set user 0 && \
-          npm config set unsafe-perm true && \
-          npm i && \
-          npm run build:jekyll && \
-          jekyll build\
+          -v ${{ github.workspace }}:/srv/jekyll \
+          -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+          jekyll/builder:latest /bin/bash -c "\
+            chmod -R 777 /srv/jekyll && \
+            yarn i && \
+            yarn run build:jekyll && \
+            jekyll build\
         "
