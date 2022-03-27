@@ -12,5 +12,5 @@
   ],
 
   "words": ["pnpm", "timestep", "vite", "prettierrc", "prettierignore"],
-  "ignoreWords": ["helaili"]
+  "ignoreWords": ["helaili", "peaceiris"]
 }

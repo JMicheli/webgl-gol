@@ -7,6 +7,23 @@
     "no-inline-html": false
   },
 
+  "prettier.configPath": "./.vscode/config/.prettierrc",
+  "prettier.ignorePath": "./.vscode/config/.prettierignore",
+
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced"
+  },
+
   "files.exclude": {
     "**/.git": true,
     "**/.jekyll-cache": true

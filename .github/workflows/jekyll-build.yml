@@ -4,62 +4,53 @@ name: Jekyll site CI
 on:
   # Triggers the workflow on push or pull request events but only for the development branch
   push:
-    branches: [ development ]
+    branches:
+      - development
   pull_request:
-    branches: [ development ]
-  
+    branches:
+      - development
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v2
-      with:
-            path: vendor/bundle
-            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
-            restore-keys: |
-              ${{ runner.os }}-gems-
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-          -v ${{ github.workspace }}:/srv/jekyll \
-          -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          jekyll/builder:latest /bin/bash -c "\
-            chmod -R 777 /srv/jekyll && \
-            yarn install && \
-            yarn run build:jekyll && \
-            jekyll build\
-        "
-    
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v3
-      with:
-            name: webgl-gol-build-artifact
-            path: ${{ github.workspace }}/_site
-            if-no-files-found: error
-  
-  # This will be the deploy stage of the workflow, we'll need to figure out how this works
-  deploy:
+      - name: Project build
+        run: |
+          yarn install
+          yarn run build:jekyll
 
-    runs-on: ubuntu-latest
+      - name: Build the site in the jekyll/builder container
+        run: |
+          docker run \
+            -v ${{ github.workspace }}:/srv/jekyll \
+            -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+            jekyll/builder:latest /bin/bash -c "\
+              chmod -R 777 /srv/jekyll && \
+              jekyll build\
+          "
 
-    # Ensure that deploy runs after build
-    needs: build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: webgl-gol-build-artifact
+          path: ${{ github.workspace }}/_site
+          if-no-files-found: error
 
-    steps:
-    - name: Download build artifact
-      uses: actions/download-artifact@v3
-      with:
-            name: webgl-gol-build-artifact
-            path: ${{ github.workspace }}/_site
-
-    - name: Testing the artifact
-      run: |
-        cat ${{ github.workspace }}/_site/index.html
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
