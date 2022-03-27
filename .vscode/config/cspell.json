@@ -6,6 +6,7 @@
     "dist",
     "types",
     "pnpm-lock.yaml",
+    "yarn.lock",
     "Gemfile",
     "*.lock"
   ],
