@@ -1,19 +1,19 @@
 name: WebGL Auto-deployment
 
-# Controls when the workflow will run
+# When workflow will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the development branch
+  # Triggers on push or pull request events for the master branch
   push:
     branches:
-      - development
+      - master
   pull_request:
     branches:
-      - development
+      - master
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows the workflow to be manually run from the Actions tab.
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# The workflow is a build job followed by a deploy job.
 jobs:
   build:
     runs-on: ubuntu-latest

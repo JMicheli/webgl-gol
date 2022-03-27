@@ -4,11 +4,11 @@ A component for displaying and playing [Conway's Game of Life](https://en.wikipe
 
 Implemented in TypeScript using [Lit](https://lit.dev) for compilation to native, reusable WebComponents.
 
+[A live demo of the application is available here](https://jmicheli.github.io/webgl-gol/).
+
 ## Development
 
-Ensure that you have Git and Node.js (version >= 11.0) installed.
-
-Note that this project uses [pnpm](https://pnpm.io/) as its package manager. The commands below will work equally well if `pnpm` is replaced with `npm` or `yarn`. For npm users, the `pnpm-lock.yaml` file can be deleted.
+Ensure that you have Git and Node.js (version >= 11.0) installed as well as a package manager such as [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), or [yarn](https://yarnpkg.com/). These instructions assume npm will be used.
 
 Clone the repository:
 
@@ -16,15 +16,11 @@ Clone the repository:
 
 Install dependencies:
 
-`pnpm i`
+`npm i`
 
 Start development server:
 
-`pnpm run dev`
-
-### Tooling
-
-This project uses VSCode tooling with extension-based automation. Configuration for this is located in the `.vscode/` directory. Configuration for ESLint, Prettier, and cSpell are located in the `.vscode/config/` subdirectory.
+`npm run dev`
 
 ## Controls
 
@@ -43,5 +39,11 @@ This project uses VSCode tooling with extension-based automation. Configuration 
 <kbd>c</kbd> - Clear cells
 
 <kbd>r</kbd> - Randomize cells
+
+## Tooling and deployment
+
+This project uses [ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/), and [Jekyll](https://jekyllrb.com/) in its build process. These have configuration files located in `tools/` to keep the root directory small.
+
+The project is deployed as a GitHub page at [jmicheli.github.io/webgl-gol](https://jmicheli.github.io/webgl-gol) using GitHub Actions.
 
 © Joseph W. Micheli 2021, all rights reserved. See `license.txt` for further information.
