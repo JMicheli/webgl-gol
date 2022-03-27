@@ -33,7 +33,7 @@ jobs:
           -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/builder:latest /bin/bash -c "\
             chmod -R 777 /srv/jekyll && \
-            yarn i && \
+            yarn install && \
             yarn run build:jekyll && \
             jekyll build\
         "
