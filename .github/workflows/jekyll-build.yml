@@ -1,0 +1,72 @@
+name: WebGL Auto-deployment
+
+# When workflow will run.
+on:
+  # Triggers on push or pull request events for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+  # Allows the workflow to be manually run from the Actions tab.
+  workflow_dispatch:
+
+# The workflow is a build job followed by a deploy job.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Project build
+        run: |
+          npm install
+          npm run build:jekyll
+
+      - name: Build the site in the jekyll/builder container
+        run: |
+          docker run \
+            -v ${{ github.workspace }}:/srv/jekyll \
+            -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+            jekyll/builder:latest /bin/bash -c "\
+              chmod -R 777 /srv/jekyll && \
+              jekyll build\
+          "
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: webgl-gol-build-artifact
+          path: ${{ github.workspace }}/_site
+          if-no-files-found: error
+
+  # Push the build results to the gh-pages branch where it will be automatically processed.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: webgl-gol-build-artifact
+          path: ${{ github.workspace }}/_site
+
+      - name: Push build artifact to gh-pages
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: _site
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

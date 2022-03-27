@@ -5,6 +5,17 @@ dist-ssr/
 types/
 *.local
 
+# Jekyll
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+
+# Tooling
+.vscode/
+
+
 # Logs
 logs/
 *.log
