@@ -8,7 +8,7 @@ Implemented in TypeScript using [Lit](https://lit.dev) for compilation to native
 
 Ensure that you have Git and Node.js (version >= 11.0) installed.
 
-Note that this project uses [pnpm](https://pnpm.io/) as its package manager. The commands below will work equally well if `pnpm` is replaced with `npm`. For npm users, the `pnpm-lock.yaml` file can be safely deleted following dependency installation.
+Note that this project uses [pnpm](https://pnpm.io/) as its package manager. The commands below will work equally well if `pnpm` is replaced with `npm` or `yarn`. The deployment script uses yarn and so a `yarn.lock` file is provided alongside the `pnpm-lock.yaml` file. For npm users, both files can be deleted.
 
 Clone the repository:
 

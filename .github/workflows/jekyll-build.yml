@@ -39,7 +39,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
             name: webgl-gol-build-artifact
-            path: /_site
+            path: ${{ github.workspace }}/_site
             if-no-files-found: error
   
   # This will be the deploy stage of the workflow, we'll need to figure out how this works
