@@ -1,0 +1,42 @@
+{
+  "name": "webgl-gol",
+  "private": true,
+  "version": "0.1.0",
+  "main": "dist/webgl-gol.es.js",
+  "exports": {
+    ".": "./dist/webgl-gol.es.js"
+  },
+  "types": "types/webgl-gol.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite dev --config ./tools/vite.config.ts",
+    "dev:jekyll": "tsc && vite build --mode jekyll --config ./tools/vite.config.ts",
+    "build": "tsc && vite build --config ./tools/vite.config.ts",
+    "build:jekyll": "tsc && vite build --mode jekyll --config ./tools/vite.config.ts",
+    "jekyll:deploy": "jekyll build --config ./tools/_config.yml",
+    "jekyll:serve": "jekyll serve --config ./tools/_config.yml --livereload",
+    "lint": "eslint --config ./tools/.eslintrc src/**/*.{js,ts}",
+    "lint:fix": "eslint --fix --config ./tools/.eslintrc src/**/*.{js,ts}",
+    "format": "prettier --config ./tools/.prettierrc --ignore-path ./tools/.prettierignore --check .",
+    "format:fix": "prettier --config ./tools/.prettierrc --ignore-path ./tools/.prettierignore --write ."
+  },
+  "dependencies": {
+    "lit": "^2.2.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-lit": "^1.6.1",
+    "eslint-plugin-wc": "^1.3.2",
+    "prettier": "^2.6.1",
+    "typescript": "^4.6.3",
+    "vite": "^2.8.6"
+  },
+  "author": "Joseph W. Micheli",
+  "license": "3-Clause BSD"
+}
