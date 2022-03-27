@@ -15,6 +15,7 @@
     "pnpm",
     "prettierignore",
     "prettierrc",
+    "subdir",
     "timestep",
     "vite"
   ],

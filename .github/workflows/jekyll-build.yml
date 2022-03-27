@@ -55,27 +55,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
           name: webgl-gol-build-artifact
           path: ${{ github.workspace }}/_site
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-          path: ${{ github.workspace }}/repo
-
       - name: Push build artifact to gh-pages
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-
-          cd /repo
-          git rm -rf
-          git clean -fxd
-          mv ../_site/* .
-          git add *
-          git commit -m "Automatic commit"
-          git push origin gh-pages
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: _site
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
