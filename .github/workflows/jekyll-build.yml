@@ -39,7 +39,7 @@ jobs:
             -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
             jekyll/builder:latest /bin/bash -c "\
               chmod -R 777 /srv/jekyll && \
-              jekyll build\
+              jekyll build --config ./tools/_config.yml\
           "
 
       - name: Upload build artifact
