@@ -4,7 +4,7 @@ A component for displaying and playing [Conway's Game of Life](https://en.wikipe
 
 Implemented in TypeScript using [Lit](https://lit.dev) for compilation to native, reusable WebComponents.
 
-[A live demo of the application is available here](https://jmicheli.github.io/webgl-gol/).
+[A live demo of the application is available here](https://jmicheli.github.io/webgl-gol/app).
 
 ## Development
 
