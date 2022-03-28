@@ -13,11 +13,8 @@
   ],
   "scripts": {
     "dev": "vite dev --config ./tools/vite.config.ts",
-    "dev:jekyll": "tsc && vite build --mode jekyll --config ./tools/vite.config.ts",
     "build": "tsc && vite build --config ./tools/vite.config.ts",
-    "build:jekyll": "tsc && vite build --mode jekyll --config ./tools/vite.config.ts",
-    "jekyll:deploy": "jekyll build --config ./tools/_config.yml",
-    "jekyll:serve": "jekyll serve --config ./tools/_config.yml --livereload",
+    "build:github": "tsc && vite build --mode jekyll --config ./tools/vite.config.ts",
     "lint": "eslint --config ./tools/.eslintrc src/**/*.{js,ts}",
     "lint:fix": "eslint --fix --config ./tools/.eslintrc src/**/*.{js,ts}",
     "format": "prettier --config ./tools/.prettierrc --ignore-path ./tools/.prettierignore --check .",

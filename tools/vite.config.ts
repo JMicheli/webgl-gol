@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) =>{
-  if (command == "build" && mode =="jekyll") {
+export default defineConfig(({ command, mode }) => {
+  if (command == "build" && mode == "jekyll") {
     return {
       build: {
         lib: {
@@ -10,11 +10,10 @@ export default defineConfig(({ command, mode }) =>{
           name: "webgl-gol",
           formats: ["es"]
         },
-        outDir: "dist",
-        rollupOptions: {
-        }
+        outDir: "docs/dist",
+        rollupOptions: {}
       }
-    }
+    };
   } else {
     return {
       build: {
@@ -22,6 +21,7 @@ export default defineConfig(({ command, mode }) =>{
           entry: "src/webgl-gol.ts",
           formats: ["es"]
         },
+        outDir: "dist",
         rollupOptions: {
           external: /^lit/
         }
