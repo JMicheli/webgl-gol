@@ -526,7 +526,7 @@ polyfillSupport$2 === null || polyfillSupport$2 === void 0 ? void 0 : polyfillSu
     }
   };
 }
-((_c$2 = globalThis.reactiveElementVersions) !== null && _c$2 !== void 0 ? _c$2 : globalThis.reactiveElementVersions = []).push("1.3.1");
+((_c$2 = globalThis.reactiveElementVersions) !== null && _c$2 !== void 0 ? _c$2 : globalThis.reactiveElementVersions = []).push("1.3.2");
 if (globalThis.reactiveElementVersions.length > 1) {
   issueWarning$2("multiple-versions", `Multiple versions of Lit loaded. Loading multiple versions is not recommended.`);
 }
@@ -585,10 +585,7 @@ const d = document;
 const createMarker = (v = "") => d.createComment(v);
 const isPrimitive = (value) => value === null || typeof value != "object" && typeof value != "function";
 const isArray = Array.isArray;
-const isIterable = (value) => {
-  var _a2;
-  return isArray(value) || typeof ((_a2 = value) === null || _a2 === void 0 ? void 0 : _a2[Symbol.iterator]) === "function";
-};
+const isIterable = (value) => isArray(value) || typeof (value === null || value === void 0 ? void 0 : value[Symbol.iterator]) === "function";
 const SPACE_CHAR = `[ 	
 \f\r]`;
 const ATTR_VALUE_CHAR = `[^ 	
@@ -632,7 +629,10 @@ const noChange = Symbol.for("lit-noChange");
 const nothing = Symbol.for("lit-nothing");
 const templateCache = /* @__PURE__ */ new WeakMap();
 const render = (value, container, options) => {
-  var _a2, _b2, _c2;
+  var _a2, _b2;
+  if (container == null) {
+    throw new TypeError(`The container to render into may not be ${container}`);
+  }
   const renderId = debugLogRenderId++;
   const partOwnerNode = (_a2 = options === null || options === void 0 ? void 0 : options.renderBefore) !== null && _a2 !== void 0 ? _a2 : container;
   let part = partOwnerNode["_$litPart$"];
@@ -646,14 +646,6 @@ const render = (value, container, options) => {
   });
   if (part === void 0) {
     const endNode = (_b2 = options === null || options === void 0 ? void 0 : options.renderBefore) !== null && _b2 !== void 0 ? _b2 : null;
-    if (((_c2 = options) === null || _c2 === void 0 ? void 0 : _c2.clearContainerForLit2MigrationOnly) === true) {
-      let n = container.firstChild;
-      while (n && n !== endNode) {
-        const next = n.nextSibling;
-        n.remove();
-        n = next;
-      }
-    }
     partOwnerNode["_$litPart$"] = part = new ChildPart(container.insertBefore(createMarker(), endNode), endNode, void 0, options !== null && options !== void 0 ? options : {});
   }
   part._$setValue(value);
@@ -740,7 +732,18 @@ const getTemplateHtml = (strings, type) => {
   if (!Array.isArray(strings) || !strings.hasOwnProperty("raw")) {
     let message = "invalid template strings array";
     {
-      message = `Internal Error: expected template strings to be an array with a 'raw' field. Please file a bug at https://github.com/lit/lit/issues/new?template=bug_report.md and include information about your build tooling, if any.`;
+      message = `
+          Internal Error: expected template strings to be an array
+          with a 'raw' field. Faking a template strings array by
+          calling html or svg like an ordinary function is effectively
+          the same as calling unsafeHtml and can lead to major security
+          issues, e.g. opening your code up to XSS attacks.
+
+          If you're using the html or svg tagged template functions normally
+          and and still seeing this error, please file a bug at
+          https://github.com/lit/lit/issues/new?template=bug_report.md
+          and include information about your build tooling, if any.
+        `.trim().replace(/\n */g, "\n");
     }
     throw new Error(message);
   }
@@ -1345,7 +1348,7 @@ class ElementPart {
 }
 const polyfillSupport$1 = window.litHtmlPolyfillSupportDevMode;
 polyfillSupport$1 === null || polyfillSupport$1 === void 0 ? void 0 : polyfillSupport$1(Template, ChildPart);
-((_d = globalThis.litHtmlVersions) !== null && _d !== void 0 ? _d : globalThis.litHtmlVersions = []).push("2.2.1");
+((_d = globalThis.litHtmlVersions) !== null && _d !== void 0 ? _d : globalThis.litHtmlVersions = []).push("2.2.5");
 if (globalThis.litHtmlVersions.length > 1) {
   issueWarning$1("multiple-versions", `Multiple versions of Lit loaded. Loading multiple versions is not recommended.`);
 }
