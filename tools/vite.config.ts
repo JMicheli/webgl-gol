@@ -5,6 +5,16 @@ export default defineConfig(({ command, mode }) => {
   if (command == "build" && mode == "jekyll") {
     return {
       build: {
+        minify: "terser",
+        terserOptions: {
+          compress: {
+            module: true,
+            passes: 2
+          },
+          mangle: {
+            toplevel: true
+          }
+        },
         lib: {
           entry: "src/webgl-gol.ts",
           name: "webgl-gol",
