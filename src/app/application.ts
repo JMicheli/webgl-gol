@@ -41,7 +41,7 @@ export class AutomataApp {
     this.regenerateBoundaries();
 
     // Grab GL context
-    const gl = this.gl = this.getWebGLContext(canvas);
+    const gl = (this.gl = this.getWebGLContext(canvas));
 
     // Initialize framebuffers
     // Create the framebuffer and set the index
