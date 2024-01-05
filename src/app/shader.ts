@@ -73,7 +73,7 @@ export class Shader {
     // Handle errors
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
       const info = gl.getShaderInfoLog(shader);
-      throw new Error("Shader compiler error: " + info);
+      throw new Error('Shader compiler error: ' + info);
     }
 
     return shader;
