@@ -12,10 +12,6 @@ _site
 .jekyll-metadata
 vendor
 
-# Tooling
-.vscode/
-
-
 # Logs
 logs/
 *.log

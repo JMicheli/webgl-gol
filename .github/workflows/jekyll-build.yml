@@ -36,21 +36,3 @@ jobs:
           BRANCH: gh-pages
           FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Removed unless build artifacts are needed later
-      # - name: Build the site in the jekyll/builder container
-      #   run: |
-      #     docker run \
-      #       -v ${{ github.workspace }}/docs:/srv/jekyll \
-      #       -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-      #       jekyll/builder:latest /bin/bash -c "\
-      #         chmod -R 777 /srv/jekyll && \
-      #         jekyll build --config ./tools/_config.yml\
-      #     "
-
-      # - name: Upload jekyll build result as artifact
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: webgl-gol-build-artifact
-      #     path: ${{ github.workspace }}/_site
-      #     if-no-files-found: error
