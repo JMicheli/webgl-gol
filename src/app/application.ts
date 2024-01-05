@@ -27,6 +27,9 @@ export class AutomataApp {
   private drawShader: Shader;
   private updateShader: Shader;
 
+  // Constants
+  private static readonly QUAD_VERTICES = new Float32Array([-1, -1, -1, 1, 1, -1, 1, 1]);
+
   /** Create a SimulationApp.
    * @constructor
    * @param {HTMLCanvasElement} canvas A canvas to draw the game on.
@@ -43,24 +46,11 @@ export class AutomataApp {
     // Initialize framebuffers
     // Create the framebuffer and set the index
     const fb = gl.createFramebuffer();
-    if (fb == null) {
-      throw new ReferenceError("Framebuffer creation failed");
-    }
+    if (!fb) throw new ReferenceError("Framebuffer creation failed");
     this.framebuffer = fb;
     this.curFBIndex = 0; // Currently using FBTextures[0]
     // Generate two framebuffer textures for swapping
-    const t1 = gl.createTexture();
-    const t2 = gl.createTexture();
-    if (t1 == null || t2 == null) {
-      throw new ReferenceError("Texture creation failed");
-    }
-    this.FBTextures = [t1, t2];
-    // Set parameters for both buffer textures
-    for (let i = 0; i < 2; i++) {
-      gl.bindTexture(gl.TEXTURE_2D, this.FBTextures[i]);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    }
+    this.FBTextures = [this.createTexture(), this.createTexture()];
 
     // Regenerate buffer textures
     this.regenerateBufferTextures(0.5);
@@ -68,16 +58,13 @@ export class AutomataApp {
     // Generate vertex array/load geometry
     // Create vertex array and bind it
     const va = gl.createVertexArray();
-    if (va == null) {
-      throw new ReferenceError("Vertex Array Object creation failed");
-    }
+    if (!va) throw new ReferenceError("Vertex Array Object creation failed");
     this.vao = va;
     gl.bindVertexArray(this.vao);
     // Create quad vertices
-    const vertices = new Float32Array([-1, -1, -1, 1, 1, -1, 1, 1]);
     const vertexPosBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, AutomataApp.QUAD_VERTICES, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(0);
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
@@ -114,12 +101,8 @@ export class AutomataApp {
     const gl = this.gl;
     // Set up blank data
     const data = new Uint8Array(4 * this.heightInCells * this.widthInCells);
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = 0;
-      data[i + 1] = 0;
-      data[i + 2] = 0;
-      data[i + 3] = 255;
-    }
+    data.fill(0);
+    data.fill(255, 3, data.length);
 
     // Bind current framebuffer texture and overwrite texture
     gl.bindTexture(gl.TEXTURE_2D, this.FBTextures[this.curFBIndex]);
@@ -229,6 +212,26 @@ export class AutomataApp {
   }
 
   /**
+   * Creates a `WebGLTexture`, sets the expected parameters, and returns it.
+   * @returns The new `WebGLTexture`.
+   */
+  private createTexture(): WebGLTexture {
+    const gl = this.gl;
+
+    const texture = gl.createTexture();
+    if (!texture) {
+      throw new ReferenceError("Texture creation failed");
+    }
+
+    // Bind texture and set parameters
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+    return texture;
+  }
+
+  /**
    * Draw the simulation to canvas.
    */
   private draw(): void {
@@ -311,10 +314,7 @@ export class AutomataApp {
    */
   private getWebGLContext(canvas: HTMLCanvasElement): WebGL2RenderingContext {
     const gl = canvas.getContext("webgl2", { antialias: false });
-    const isWebGL2 = !!gl;
-    if (!isWebGL2 || !gl) {
-      throw console.error("No WebGL2 context");
-    }
+    if (!gl) throw new Error("No WebGL2 context available");
 
     return gl;
   }

@@ -142,10 +142,10 @@ export class WebGLGol extends LitElement {
       this.application = new AutomataApp(this.canvas, this.cellWidth);
 
       // Add event listeners
-      window.addEventListener("keyup", this.handleKeyUp);
-      window.addEventListener("mouseup", this.handleMouseUp);
-      this.addEventListener("mousemove", this.handleMouseMove);
-      this.addEventListener("mousedown", this.handleMouseDown);
+      window.addEventListener("keyup", this.handleKeyUp, { passive: true });
+      window.addEventListener("mouseup", this.handleMouseUp, { passive: true });
+      this.addEventListener("mousemove", this.handleMouseMove, { passive: true });
+      this.addEventListener("mousedown", this.handleMouseDown, { passive: true });
 
       // Begin update loop
       this.updateStep();
