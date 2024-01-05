@@ -27,6 +27,7 @@ jobs:
           npm run build:github
           cp README.md docs/index.md
           cp license.txt docs/license.txt
+          rm .gitignore
 
       - name: Push docs/ content to gh-pages branch
         uses: s0/git-publish-subdir-action@develop
