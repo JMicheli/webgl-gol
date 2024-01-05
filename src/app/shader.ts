@@ -23,35 +23,29 @@ export class Shader {
    */
   constructor(glContext: WebGL2RenderingContext, vSource: string, fSource: string) {
     // Store context, place in const for readability
-    this.gl = glContext;
-    this.program = this.createShaderProgram(vSource, fSource);
-  }
+    const gl = (this.gl = glContext);
 
-  private createShaderProgram(vSource: string, fSource: string): WebGLProgram {
-    const gl = this.gl;
-    const program = gl.createProgram();
-    if (!program) throw new Error("Failed to create shader program");
-
-    // Create shaders
-    const vShader = this.createGLShader(vSource, gl.VERTEX_SHADER);
-    const fShader = this.createGLShader(fSource, gl.FRAGMENT_SHADER);
-
-    // Attach shaders to program and link
-    gl.attachShader(program, vShader);
-    gl.attachShader(program, fShader);
-    gl.linkProgram(program);
-
-    // Check if there was an error
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      const info = gl.getProgramInfoLog(program);
-      throw new Error("Shader program failed to link: " + info);
+    // Create a program and store it
+    const prog = glContext.createProgram();
+    if (!prog) {
+      throw new Error("Failed to create program");
+    } else {
+      this.program = prog;
     }
 
-    // Delete residual shader objects
+    const vShader = this.createGLShader(vSource, gl.VERTEX_SHADER);
+    const fShader = this.createGLShader(fSource, gl.FRAGMENT_SHADER);
+    gl.attachShader(prog, vShader);
     gl.deleteShader(vShader);
+    gl.attachShader(prog, fShader);
     gl.deleteShader(fShader);
+    gl.linkProgram(prog);
 
-    return program;
+    // Handle errors
+    const error = gl.getProgramInfoLog(prog);
+    if (error) {
+      throw new Error("Problem with program creation: " + error);
+    }
   }
 
   /**
@@ -71,9 +65,9 @@ export class Shader {
     gl.compileShader(shader);
 
     // Handle errors
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      const info = gl.getShaderInfoLog(shader);
-      throw new Error('Shader compiler error: ' + info);
+    const error = gl.getShaderInfoLog(shader);
+    if (error) {
+      throw new Error("Shader compiler error: " + error);
     }
 
     return shader;
