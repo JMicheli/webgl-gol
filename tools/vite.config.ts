@@ -10,7 +10,7 @@ export default defineConfig(({ command, mode }) => {
           name: "webgl-gol",
           formats: ["es"]
         },
-        outDir: "",
+        outDir: "dist",
         rollupOptions: {}
       }
     };
