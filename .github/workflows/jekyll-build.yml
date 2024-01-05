@@ -25,14 +25,14 @@ jobs:
         run: |
           npm install
           npm run build:github
-          cp README.md docs/index.md
-          cp license.txt docs/license.txt
-          cp dist/webgl-gol.js docs/webgl-gol.js
+          cp README.md pages/index.md
+          cp license.txt pages/license.txt
+          cp dist/webgl-gol.js pages/webgl-gol.js
 
-      - name: Push docs/ content to gh-pages branch
+      - name: Push pages/ content to gh-pages branch
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: gh-pages
-          FOLDER: docs
+          FOLDER: pages
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
