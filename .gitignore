@@ -1,5 +1,4 @@
 # Build byproducts
-dist/
 node_modules/
 
 # Jekyll
