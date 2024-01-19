@@ -33,7 +33,7 @@
     "eslint-plugin-wc": "^2.0.4",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.12"
   },
   "author": "Joseph W. Micheli",
   "license": "3-Clause BSD"
